@@ -1,4 +1,7 @@
-﻿  Block.cpp
-  main.cpp
-  Generating Code...
+﻿  main.cpp
+c:\users\sojka\documents\github\game-mario-sfml\mario\main.cpp(24): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
   Mario.vcxproj -> C:\Users\Sojka\Documents\GitHub\Game-Mario-SFML\Debug\Mario.exe
