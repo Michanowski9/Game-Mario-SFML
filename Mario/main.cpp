@@ -1,26 +1,32 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
-
-
-using namespace sf;
-using namespace std;
+#include "Block.h"
 
 int main()
 {
-	RenderWindow window{ VideoMode{800,600},"My Mario" };
+	sf::Texture texture;
+	if (!texture.loadFromFile("block_dirt.png"))
+	{
+		std::cerr << "Loading texture block_dirt.png falied";
+	}
+
+	Block block{ texture, sf::Vector2f(200,200) };
+
+	sf::RenderWindow window{ sf::VideoMode{800,600},"My Mario" };
 	window.setFramerateLimit(60);
-	Event event;
+	sf::Event event;
 
 	while (true)
 	{
-		window.clear(Color::Black);
+		window.clear(sf::Color::White);
 		window.pollEvent(event);
-		if (event.type == Event::Closed)
+		if (event.type == sf::Event::Closed)
 		{
 			window.close();
 			break;
 		}
+		window.draw(block);
 		window.display();
 	}
 	return 0;
