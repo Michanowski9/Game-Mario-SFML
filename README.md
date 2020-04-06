@@ -1,2 +1,2 @@
 # Game Mario SFML
- VS 2017 SFML
+ VS2017 SFML-2.5.1
