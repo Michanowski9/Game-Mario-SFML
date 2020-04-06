@@ -16,7 +16,7 @@ std::vector<Block> LoadMap(sf::Texture &texture)
 	uint8_t input = 0;
 	for (int i = 0, j = 0; map >> input; i++)
 	{
-		if (i == MAP_SIZE.x)		{
+		if (i == MAP_SIZE.x) {
 			i = 0;
 			j++;
 		}
@@ -40,10 +40,11 @@ int main()
 	std::vector<Block> blocks = LoadMap(texture);
 
 	sf::RenderWindow window{ sf::VideoMode{WINDOW_SIZE.x,WINDOW_SIZE.y},"My Mario" };
+	window.setPosition(sf::Vector2i(0, 0));
 	window.setFramerateLimit(60);
 	sf::Event event;
 
-	while (true)
+	while (window.isOpen())
 	{
 		window.clear(sf::Color::White);
 		window.pollEvent(event);
@@ -51,12 +52,11 @@ int main()
 		if (event.type == sf::Event::Closed)
 		{
 			window.close();
-			break;
 		}
 
-		for(Block b : blocks)
+		for (Block b : blocks)
 			window.draw(b);
-		
+
 		window.display();
 	}
 	return 0;
