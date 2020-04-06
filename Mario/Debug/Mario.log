@@ -1,2 +1,13 @@
-﻿  Player.cpp
-  Mario.vcxproj -> C:\Users\Sojka\Documents\GitHub\Game-Mario-SFML\Debug\Mario.exe
+﻿  main.cpp
+c:\users\sojka\documents\github\game-mario-sfml\mario\main.cpp(25): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Physics.cpp
+  Player.cpp
+c:\users\sojka\documents\github\game-mario-sfml\mario\player.cpp(4): error C2280: 'Physics::Physics(void)': attempting to reference a deleted function
+  c:\users\sojka\documents\github\game-mario-sfml\mario\physics.h(7): note: see declaration of 'Physics::Physics'
+  c:\users\sojka\documents\github\game-mario-sfml\mario\physics.h(7): note: 'Physics::Physics(void)': function was explicitly deleted
+  Generating Code...
+c:\users\sojka\documents\github\game-mario-sfml\mario\main.cpp(48): error C4716: 'CollisionTest': must return a value

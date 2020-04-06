@@ -29,9 +29,26 @@ std::vector<Block> LoadMap(sf::Texture &texture)
 	return blocks;
 }
 
+float GetDistance(sf::Vector2f a, sf::Vector2f b) {
+	return (a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y);
+}
+
+
+float Module(float a, float b)
+{
+	if (a > b)
+		return a - b;
+	else
+		return b - a;
+}
+
+bool CollisionTest(Player &player, Block &block)
+{
+	//TODO
+}
+
 int main()
 {
-
 	sf::Texture texture;
 	if (!texture.loadFromFile("block_dirt.png"))
 	{
@@ -45,7 +62,6 @@ int main()
 
 	std::vector<Block> blocks = LoadMap(texture);
 	Player player(texturePlayer, sf::Vector2f(100, 100));
-	
 
 	sf::RenderWindow window{ sf::VideoMode{WINDOW_SIZE.x,WINDOW_SIZE.y},"My Mario", sf::Style::None };
 	window.setPosition(sf::Vector2i(0, 0));
@@ -57,6 +73,12 @@ int main()
 		window.clear(sf::Color::White);
 		window.pollEvent(event);
 
+		//collisions
+		/*player.SetStanding(false);
+		for (auto &block : blocks) {
+			CollisionTest(player, block);
+			
+		}*/
 		player.Update();
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
