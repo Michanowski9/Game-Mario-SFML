@@ -5,6 +5,7 @@
 #include <fstream>
 
 #include "Block.h"
+#include "Player.h"
 
 const sf::Vector2u MAP_SIZE{ 30, 14 };
 const sf::Vector2u WINDOW_SIZE{ 1000, 700 };
@@ -36,10 +37,17 @@ int main()
 	{
 		std::cerr << "Loading texture block_dirt.png falied";
 	}
+	sf::Texture texturePlayer;
+	if (!texturePlayer.loadFromFile("texturePlayer.png"))
+	{
+		std::cerr << "Loading texture texturePlayer.png falied";
+	}
 
 	std::vector<Block> blocks = LoadMap(texture);
+	Player player(texturePlayer, sf::Vector2f(100, 100));
+	
 
-	sf::RenderWindow window{ sf::VideoMode{WINDOW_SIZE.x,WINDOW_SIZE.y},"My Mario" };
+	sf::RenderWindow window{ sf::VideoMode{WINDOW_SIZE.x,WINDOW_SIZE.y},"My Mario", sf::Style::None };
 	window.setPosition(sf::Vector2i(0, 0));
 	window.setFramerateLimit(60);
 	sf::Event event;
@@ -49,13 +57,17 @@ int main()
 		window.clear(sf::Color::White);
 		window.pollEvent(event);
 
-		if (event.type == sf::Event::Closed)
+		player.Update();
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 		{
 			window.close();
 		}
 
-		for (Block b : blocks)
+		for (Block& b : blocks) {
 			window.draw(b);
+		}
+		window.draw(player);
 
 		window.display();
 	}
