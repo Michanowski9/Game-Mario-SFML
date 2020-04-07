@@ -42,10 +42,40 @@ float Module(float a, float b)
 		return b - a;
 }
 
-bool IsBlockUnder(Player &player, Block &block)
+bool IsBlockUnder(Player &p, Block &b)
 {
-	if ((Module(player.getPosition().x, block.getPosition().x) < 50)
-		&& (Module(player.getPosition().y + 50, block.getPosition().y) < 5)) {
+	if ((Module(p.getPosition().x, b.getPosition().x) < 50)
+		&& (Module(p.getPosition().y + 50, b.getPosition().y) < 5)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+bool IsBlockOver(Player &p, Block &b)
+{
+	if ((Module(p.getPosition().x, b.getPosition().x) < 50)
+		&& (Module(p.getPosition().y - 50, b.getPosition().y) < 2)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+bool IsBlockOnLeft(Player &p, Block &b)
+{
+	if ((Module(p.getPosition().y, b.getPosition().y) < 50)
+		&& (Module(p.getPosition().x, b.getPosition().x + 50) < 2)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+bool IsBlockOnRight(Player &p, Block &b)
+{
+	if ((Module(p.getPosition().y, b.getPosition().y) < 50)
+		&& (Module(p.getPosition().x, b.getPosition().x - 50) < 2)) {
 		return true;
 	}
 	else {
@@ -88,13 +118,28 @@ int main()
 		player.Update();
 
 		player.SetStanding(false);
+
 		for (auto &b : blocks) {
 			//CollisionTest(player, block);
 			if (IsBlockUnder(player, b) == true) {
 				player.SetStanding(true);
 				player.setPosition(sf::Vector2f(player.getPosition().x, b.getPosition().y - 50));
-				break;
+				player.SetIsAfterCollisionTop(false);
 			}
+			if (IsBlockOver(player, b) == true && player.GetIsAfterCollisionTop() == false) {
+				player.setPosition(sf::Vector2f(player.getPosition().x, b.getPosition().y + 50));
+				player.SetIsAfterCollisionTop(true);
+				player.ClearVelocity(1);
+			}
+			if (IsBlockOnLeft(player, b) == true) {
+				player.setPosition(sf::Vector2f(b.getPosition().x + 50, player.getPosition().y));
+				player.ClearVelocity(0);
+			}
+			if (IsBlockOnRight(player, b) == true) {
+				player.setPosition(sf::Vector2f(b.getPosition().x - 50, player.getPosition().y));
+				player.ClearVelocity(0);
+			}
+
 		}
 		
 
