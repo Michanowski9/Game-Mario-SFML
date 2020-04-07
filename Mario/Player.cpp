@@ -7,14 +7,31 @@ Player::Player(sf::Texture &texture, sf::Vector2f position)
 }
 void Player::Update()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
-		Physics::velocity = { -speed, velocity.y };
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
-		Physics::velocity = { speed, velocity.y };
+	if (isStanding == false) {
+		velocity.y += speed/10;
 	}
 	else {
-		Physics::velocity = { 0.0f, velocity.y };
+		velocity.y = 0.0f;
 	}
-	Physics::Update();
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
+		velocity.x = -speed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
+		velocity.x = speed;
+	}
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) == false) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) == false)) {
+		velocity.x = 0.0f;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && isStanding == true) {
+		velocity.y = -6;
+	}
+
+	this->move(velocity);
+}
+
+void Player::SetStanding(bool value)
+{
+	isStanding = value;
 }

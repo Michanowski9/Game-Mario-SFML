@@ -42,9 +42,21 @@ float Module(float a, float b)
 		return b - a;
 }
 
+bool IsBlockUnder(Player &player, Block &block)
+{
+	if ((Module(player.getPosition().x, block.getPosition().x) < 50)
+		&& (Module(player.getPosition().y + 50, block.getPosition().y) < 5)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 bool CollisionTest(Player &player, Block &block)
 {
 	//TODO
+	return true;
 }
 
 int main()
@@ -73,16 +85,20 @@ int main()
 		window.clear(sf::Color::White);
 		window.pollEvent(event);
 
-		//collisions
-		/*player.SetStanding(false);
-		for (auto &block : blocks) {
-			CollisionTest(player, block);
-			
-		}*/
 		player.Update();
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
-		{
+		player.SetStanding(false);
+		for (auto &b : blocks) {
+			//CollisionTest(player, block);
+			if (IsBlockUnder(player, b) == true) {
+				player.SetStanding(true);
+				player.setPosition(sf::Vector2f(player.getPosition().x, b.getPosition().y - 50));
+				break;
+			}
+		}
+		
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
 			window.close();
 		}
 
